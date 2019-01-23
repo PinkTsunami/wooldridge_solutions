@@ -157,7 +157,7 @@ summary(fit1 <- lm(lpsoda ~ prpblck + lincome + prppov, data = df))
 # ii #
 
 df.temp <- df[complete.cases(df[,c('lincome','prppov')]),] #keep only rows that have non-null values for both lincome and prppov
-cor(df.temp$lincome, df.temp$prppov,)
+cor(df.temp$lincome, df.temp$prppov)
 
 summary(fit1)$coef[c('lincome','prppov'),'Pr(>|t|)']
 
