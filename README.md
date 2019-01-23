@@ -1,5 +1,5 @@
 # Introductory Econometrics by Jeffrey Wooldridge, Computer Solutions
-R scripts for computer exercises in Introductory Econometrics by Jeffery Wooldridge (5/6 ed.)
+R scripts for computer exercises in Introductory Econometrics by Jeffrey Wooldridge (5/6 ed.)
 
 This is not intended to be homework solutions to the exercises.
 Because of this, you will not find solutions to problems that do not require a computer program/software to answer.
