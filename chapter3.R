@@ -1,19 +1,21 @@
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(wooldridge, stargazer, dplyr, ggplot2)
+pacman::p_load(wooldridge, stargazer, ggplot2)
 
-# This is not intended to be homework solutions to the exercises
-# the intent of this script is to provide the code required to 
-# answer some of the homework questions with the textbook.
-# Because of this, you will not find solutions to problems
-# that do not require a computer program/software to answer.
+# wooldridge package used for datasets
+# stargazer package used to compare regression results
+# ggplot2 package used optionally for graphing
 
-########## Chapter 3########## 
+########## Chapter 3 ########## 
 
 #### C1 ####
 
 df <- bwght
 
 # iii #
+
+# Note: For this first exercise, I set our linear regressions to a variable (fit1 and fit2)
+# and then call them later. Every exercise past this I will do this in one step/line. 
+# Meaning I will set them to a variable and tell R to show us a summary of the results.
 
 fit1 <- lm(bwght ~ cigs, data = df)
 fit2 <- lm(bwght ~ cigs + faminc, data = df)
@@ -61,8 +63,7 @@ sum(df$profits<0) # nine observations are negative
 # iii #
 
 summary(fit3 <- lm(lsalary ~ lsales + lmktval + profits + ceoten, data = df))
-paste('one more year as CEO increases salary by about', round(fit3$coefficients['ceoten']*100,1), '%')
-# holding lsales, lmktval, and profits constant
+round(fit3$coefficients['ceoten']*100,1)
 
 # iv #
 
@@ -292,6 +293,12 @@ df.new$predicted.educ <- predict(fit3, newdata = df.new)
 
 plot(df.new$abil, df.new$predicted.educ, xlab = 'Ability', ylab = 'Predicted Education')
 
+# or dplyr/ggplot way
+
+ggplot(df.new, aes(x=abil, y = predicted.educ)) + 
+  geom_point() + 
+  labs(x = 'Ability', y = 'Predicted Education')
+
 #### C11 ####
 
 df <- meapsingle
@@ -311,13 +318,15 @@ cor(df$lmedinc, df$free)
 
 # v #
 
+# using formula from the textbook
 1/(1-summary(lm(pctsgle ~ lmedinc + free, data = df))$r.squared)
 1/(1-summary(lm(lmedinc ~ pctsgle + free, data = df))$r.squared)
 1/(1-summary(lm(free ~ lmedinc + pctsgle, data = df))$r.squared)
 
-install.packages('car')
-library(car)
-vif(fit2)
+# using "car" package
+# install.packages('car')
+
+car::vif(fit2)
 
 #### C12 ####
 
