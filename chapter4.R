@@ -176,6 +176,61 @@ linearHypothesis(fit2, c('lincome = 0','prppov = 0'))
 
 df <- elem94_95
 
-# still in progress of making...
+# i #
 
+summary(fit1 <- lm(lavgsal ~ bs, data = df))
+(fit1$coefficients['bs'] + 1)/summary(fit1)$coef['bs','Std. Error']
 
+# ii #
+
+summary(fit2 <- lm(lavgsal ~ bs + lenrol + lstaff, data = df))
+stargazer(fit1, fit2, type = 'text')
+
+# v #
+
+summary(fit3 <- lm(lavgsal ~ bs + lenrol + lstaff + lunch, data = df))
+stargazer(fit1, fit2, fit3, type = 'text')
+
+#### C11 ####
+
+df <- htv
+
+# i #
+
+summary(fit1 <- lm(educ ~ motheduc + fatheduc + abil + I(abil^2), data = df))
+
+# ii #
+
+lht(fit1, 'motheduc = fatheduc') # lht() same as linearHypothesis()
+
+# iii #
+
+summary(fit2 <- lm(educ ~ motheduc + fatheduc + abil + I(abil^2) + tuit17 + tuit18, data = df))
+lht(fit2, c('tuit17 = 0','tuit18 = 0'))
+
+# iv #
+
+cor(df$tuit17, df$tuit18)
+
+df$avg.tuit <- (df$tuit17 + df$tuit18)/2
+
+summary(fit3 <- lm(educ ~ motheduc + fatheduc + abil + I(abil^2) + avg.tuit, data = df))
+stargazer(fit1, fit2, fit3, type = 'text')
+
+#### C12 ####
+
+df <- econmath
+
+# i #
+
+summary(fit1 <- lm(colgpa ~ hsgpa + actmth + acteng, data = df))
+
+# ii #
+
+fit1$coefficients['hsgpa']*.343
+
+(fit1$coefficients['hsgpa']*.343)/(fit1$coefficients['actmth']*sd(df$actmth, na.rm = T))
+
+# iii #
+
+lht(fit1, 'actmth = acteng')
